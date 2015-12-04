@@ -1,0 +1,22 @@
+<div class="ionic login animate-pan-in-left" style="background-color: #eee;" ng-app="login">
+    <div class="no-header flat" style="margin-top: 1em;">
+    <form ng-submit="login()" name="form" role="form">
+        <div class="content"">
+            <h1 class="text-center">Login</h1>
+
+        <div class="content list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Name</span>
+                <input autofocus required ng-model="user" type="text" placeholder="Name">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">PIN Code</span>
+                <input required ng-model="pin" type="text" placeholder="PIN Code">
+            </label>
+        </div>
+        <div class="padding">
+            <button type="submit" ng-disabled="form.$invalid" class="button button-block button-calm waves-effect waves-light">Login</button>
+        </div>
+    </div></div>
+    </form>
+</div>

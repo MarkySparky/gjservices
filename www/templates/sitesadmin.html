@@ -1,0 +1,23 @@
+<div class="ionic ionic-body">
+    <div class="bar bar-header bar-positive">
+        <div class="buttons">
+            <button ui-sref="sites" class="button button-icon icon ion-android-arrow-back flat"></button>
+        </div>
+
+        <h1 class="title">Sites list</h1>
+    </div>
+    <ion-content class="content has-header">
+        <ion-list can-swipe="listCanSwipe" class="list condensed-space no-padding">
+            <ion-item ng-repeat="site in sites" class="item">
+                <h2>{{site.title}}</h2>
+                <ion-option-button class="button-assertive" ng-click="del(site)">
+                    Delete
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar ng-show="isAdmin" class="fab-right">
+        <nav class="addsite" mfb-menu ng-click="addSite()" position="b" menu-state="menuOpened" effect="zoomin" label="Add" active-icon="ion-plus" resting-icon="ion-plus" toggling-method="click">
+        </nav>
+    </ion-footer-bar>
+</div>

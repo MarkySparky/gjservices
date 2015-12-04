@@ -1,0 +1,29 @@
+<div class="ionic ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Sites</h1>
+    </div>
+    <div class="bar bar-subheader">
+        <h2 ng-click="chooseDate()" class="title">{{workDate | amDateFormat:'DD-MMM-YYYY'}}</h2>
+    </div>
+    <ion-content class="content has-header has-subheader">
+        <ion-list class="list condensed-space no-padding">
+            <ion-item ng-repeat="site in work" class="item item-thumbnail-left" ui-sref="site({date: shortDate(workDate), 'key':site.$id})">
+                <img ng-if="site.src" ng-src="{{site.src}}">
+                <img ng-if="!site.src" ng-src="img/thumbnail.png">
+                <h2>{{site.title}}</h2>
+                <p>{{site.comments}}</p>
+                <div ng-show="(site.machineHours + site.manHours + site.salt) >0" class="siteoverview">
+                    <div>Machine <span class="qty">{{site.machineHours}}</span></div>
+                    <div>Man <span class="qty">{{site.manHours}}</span></div>
+                    <div>Salt <span class="qty">{{site.salt}}</span></div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar ng-show="isAdmin" class="fab-right">
+        <nav mfb-menu position="br" menu-state="menuOpened" effect="zoomin" label="Close menu" active-icon="ion-close" resting-icon="ion-navicon" toggling-method="click">
+            <button ng-click="goAdmin()" mfb-button icon="ion-gear-a" label="Site List"></button>
+            <button ng-click="sendEmail()" mfb-button icon="ion-paper-airplane" label="Send email"></button>
+        </nav>
+    </ion-footer-bar>
+</div>
