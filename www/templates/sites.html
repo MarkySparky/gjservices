@@ -1,21 +1,34 @@
 <div class="ionic ionic-body">
-    <div class="bar bar-header bar-positive">
+    <div class="bar bar-header bar-positive fab-right">
+        <div class="buttons">
+            <button ui-sref="pin" class="button button-icon icon ion-log-out flat"></button>
+        </div>
+
         <h1 class="title">Sites</h1>
+        <div class="buttons">
+            <button ng-click="doRefresh();" class="button button-outline flat">sync</button>
+        </div>
+
+
     </div>
     <div class="bar bar-subheader">
         <h2 ng-click="chooseDate()" class="title">{{workDate | amDateFormat:'DD-MMM-YYYY'}}</h2>
     </div>
     <ion-content class="content has-header has-subheader">
+      <ion-refresher
+        pulling-text="Pull to sync..."
+        on-refresh="doRefresh()">
+      </ion-refresher>
         <ion-list class="list condensed-space no-padding">
-            <ion-item ng-repeat="site in work" class="item item-thumbnail-left" ui-sref="site({date: shortDate(workDate), 'key':site.$id})">
-                <img ng-if="site.src" ng-src="{{site.src}}">
-                <img ng-if="!site.src" ng-src="img/thumbnail.png">
+            <ion-item ng-repeat="site in sites | filter: site.disabled" class="item item-thumbnail-left" ui-sref="site({date: Slug.slugify(shortDate(workDate)), 'key':Slug.slugify(site.title), title: site.title})">
+                <img ng-if="getWorkFor(site).src" ng-src="{{getWorkFor(site).src}}">
+                <img ng-if="!getWorkFor(site).src" ng-src="img/thumbnail.png">
                 <h2>{{site.title}}</h2>
-                <p>{{site.comments}}</p>
-                <div ng-show="(site.machineHours + site.manHours + site.salt) >0" class="siteoverview">
-                    <div>Machine <span class="qty">{{site.machineHours}}</span></div>
-                    <div>Man <span class="qty">{{site.manHours}}</span></div>
-                    <div>Salt <span class="qty">{{site.salt}}</span></div>
+                <p>{{getWorkFor(site).comments}}</p>
+                <div ng-show="getWorkFor(site).machineHours >0 || getWorkFor(site).manHours >0 ||  getWorkFor(site).salt >0" class="siteoverview">
+                    <div>Machine <span class="qty">{{getWorkFor(site).machineHours}}</span></div>
+                    <div>Man <span class="qty">{{getWorkFor(site).manHours}}</span></div>
+                    <div>Salt <span class="qty">{{getWorkFor(site).salt}}</span></div>
                 </div>
             </ion-item>
         </ion-list>

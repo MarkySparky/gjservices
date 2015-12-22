@@ -49,14 +49,26 @@ angular.module('starter', ['ionic', 'firebase', 'ngStorage', 'ng-mfb', 'slugifie
         controller: 'SitesAdminCtrl'
     })
 
+    .state('allwork', {
+        url: '/allwork',
+        templateUrl: 'templates/allwork.html',
+        controller: 'AllWorkController'
+    })
+
     .state('sites', {
         url: '/sites',
         templateUrl: 'templates/sites.html',
-        controller: 'SitesCtrl'
+        controller: 'SitesCtrl',
+        resolve: {
+            allStorage: function(Work){
+                console.log('Work from resolve');
+                return Work.getAllWork();
+            }
+        }
     })
 
     .state('site', {
-        url: '/site/:date/:key',
+        url: '/site/:date/:key/:title',
         templateUrl: 'templates/site.html',
         controller: 'SiteCtrl'
     });
@@ -107,6 +119,11 @@ angular.module('starter', ['ionic', 'firebase', 'ngStorage', 'ng-mfb', 'slugifie
             cordova.plugins.Keyboard.disableScroll(true);
 
         }
+
+        if (window.cordova && window.cordova.logger) {
+            window.cordova.logger.__onDeviceReady();
+        }
+
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.overlaysWebView(false);
@@ -177,6 +194,8 @@ angular.module('starter.controllers', [])
 })
 
 .constant('globals', {
+    URL: 'https://gjservices.firebaseio.com',
+    URL2: 'api',
     ADMIN_EMAIL: 'markacaulfield@googlemail.com',
     DESKTOP: !(!!window.plugins), // e.g. 'Europe/London'
     USER: 'markacaulfield@googelemail.com',

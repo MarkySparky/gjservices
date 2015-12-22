@@ -3,52 +3,48 @@
         <div class="buttons">
             <button ui-sref="sites" class="button button-icon icon ion-android-arrow-back flat"></button>
         </div>
-        <h1 class="title">{{site.title}}</h1>
+        <h1 class="title">{{title}}</h1>
     </ion-header-bar>
-    <ion-content class="has-header has-footer">
-        <form ng-submit="createWork(site)">
+    <ion-content class="has-header">
+        <form ng-submit="saveWork()">
             <div class="overview bg-calm">
                 <h4 style="color: #666">{{date || 'Today'}}</h4>
             </div>
-        <div ng-show="site.email" class="row">
-            {{site.email}}
-        </div>
+            <div ng-show="site.email" class="row">
+                {{work.email}}
+            </div>
             <div class="list">
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Bags of salt</span>
-                    <input type="number" maxlength="2" min="0" max="99" placeholder="Enter the number of bags of salt used" ng-model="site.salt" limit-to="2">
+                    <input type="number" maxlength="2" min="0" max="99" placeholder="Enter the number of bags of salt used" ng-model="work.salt" limit-to="2">
                 </label>
                 <div class="row">
                     <label class="col item item-input item-floating-label">
                         <span class="input-label">Machine hours</span>
-                        <input type="number" maxlength="2" min="0" max="99" placeholder="Qty machine hours" ng-model="site.machineHours" limit-to="2"">
+                        <input type="number" maxlength="2" min="0" max="99" placeholder="Qty machine hours" ng-model="work.machineHours" limit-to="2">
                     </label>
                     <label class="col item item-input item-floating-label">
-                        <span class="input-label">Man hours</span>
-                        <input type="number" maxlength="2" min="0" max="99" placeholder="Qty man hours" ng-model="site.manHours" limit-to="2">
+                        <span class="input-label ">Man hours</span>
+                        <input type="number" maxlength="2" min="0" max="99 " placeholder="Qty man hours" ng-model="work.manHours" limit-to="2">
                     </label>
                 </div>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Comments</span>
-                    <textarea msd-elastic type="text" ng-max-length="500" placeholder="Anything you want to say about this job?" ng-model="site.comments"></textarea>
+                    <textarea msd-elastic type="text" ng-max-length="500" placeholder="Anything you want to say about this job?" ng-model="work.comments"></textarea>
                 </label>
-                <div ng-show="site.src" class="item item-image" style="height: auto">
-                    <img ng-src="{{site.src}}" />
+                <button ng-show="work.src" ng-click="deletePhoto()" class="button button-block button-assertive">
+                    Delete photo
+                </button>
+                <button ng-click="saveWork()" class="button button-large button-block button-positive">
+                    Save
+                </button>
+                <div ng-show="work.src" class="item item-image" style="height: auto">
+                    <img ng-src="{{work.src}}" />
                 </div>
             </div>
         </form>
+        <button ng-show="!work.src" ng-click="addPhoto()" class="button button-block button-clear">
+            Add photo
+        </button>
     </ion-content>
-    <ion-footer-bar class="fab-right">
-        <nav ng-show="!site.src" mfb-menu position="br" menu-state="menuOpened" effect="zoomin" label="Take photo" active-icon="ion-android-camera" resting-icon="ion-android-camera" ng-click="addPhoto()" toggling-method="click">
-        </nav>
-        <nav ng-show="site.src" mfb-menu position="br" menu-state="menuOpened" effect="zoomin" label="Delete photo" active-icon="ion-close" resting-icon="ion-close" ng-click="deletePhoto()" toggling-method="click">
-        </nav>
-
-<!--
-        <nav mfb-menu position="br" menu-state="menuOpened" effect="zoomin" label="Close menu" active-icon="ion-close" resting-icon="ion-navicon" toggling-method="click">
-            <button ng-show="!{{site.src}}" ng-click="addPhoto()" mfb-button icon="ion-camera" label="Add photo"></button>
-            <button ng-show="{{site.src}}" ng-click="deletePhoto()" mfb-button icon="ion-close" label="Delete photo"></button>
-        </nav>
--->
-    </ion-footer-bar>
 </ion-pane>

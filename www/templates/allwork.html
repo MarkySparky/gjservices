@@ -1,0 +1,32 @@
+<ion-pane>
+    <ion-header-bar align-title="center" class="bar-positive">
+        <div class="buttons">
+            <button ui-sref="sitesadmin" class="button button-icon icon ion-android-arrow-back flat"></button>
+        </div>
+        <h1 class="title">Recent sites</h1>
+        <div class="buttons">
+            <button ng-click="sendEmail()" class="button flat">Export</button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="has-header">
+        <ion-list class="list condensed-space no-padding"> 
+            <ul ng-repeat="item in work | orderBy : item.$id : true">
+                <li class="item-divider">{{ item.$id }}</li>
+                    <ion-item class="item-thumbnail-left" ng-repeat="(key, value) in item">
+                        <img ng-if="value.src" ng-src="{{value.src}}">
+                        <img ng-if="!value.src" ng-src="img/thumbnail.png">
+                        <h2>{{value.title}}</h2>
+                        <div class="created-by">{{value.createdBy}}</div>
+                        <p>{{value.comments}}</p>
+                        <div ng-show="value.machineHours >0 || value.manHours >0 ||  value.salt >0" class="siteoverview">
+                            <div>Machine <span class="qty">{{value.machineHours}}</span></div>
+                            <div>Man <span class="qty">{{value.manHours}}</span></div>
+                            <div>Salt <span class="qty">{{value.salt}}</span></div>
+                        </div>
+                        </ion-item>
+                </li>
+
+            </ul>
+        </ion-list>
+    </ion-content>
+</ion-pane>

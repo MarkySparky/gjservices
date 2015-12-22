@@ -17,37 +17,74 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 @import "scss/pin";
+
 .overview {
-	text-align: center;
+    text-align: center;
 }
 
 .siteoverview {
-  display: flex;
-  width: 65%;
-  position: absolute;
-  bottom: 0px;
-  color: #999;
-  font-size: 0.7em;
-  >div {
-    flex-basis: 33%;
-  }
-  .qty {
-    font-weight: 600;
-  }
-  * {
-    text-align: center;
-  }
-  div:first-of-type {
-  	text-align: left;
-  }
-  div:last-of-type {
-  	text-align: right;
-  }
+    display: flex;
+    width: 65%;
+    position: absolute;
+    bottom: 0px;
+    color: #999;
+    font-size: 0.7em;
+
+    > div {
+        flex-basis: 33%;
+    }
+
+    .qty {
+        font-weight: 600;
+    }
+
+    * {
+        text-align: center;
+    }
+
+    div:first-of-type {
+        text-align: left;
+    }
+
+    div:last-of-type {
+        text-align: right;
+    }
 }
 
 .addsite {
-	margin: -25px auto;
+    margin: -25px auto;
+}
+
+.created-by {
+    color: #99c;
+    font-size: 0.8em;
+    line-height: 0.8em;
+}
+
+.spin {
+    animation: spin .5s infinite linear;
+}
+
+@-moz-keyframes spinoff {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(-360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }

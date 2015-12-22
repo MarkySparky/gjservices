@@ -9166,3 +9166,23 @@ a.button {
 
 .addsite {
   margin: -25px auto; }
+
+.created-by {
+  color: #99c;
+  font-size: 0.8em;
+  line-height: 0.8em; }
+
+.spin {
+  animation: spin .5s infinite linear; }
+
+@-moz-keyframes spinoff {
+  0% {
+    -moz-transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(-360deg); } }
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }

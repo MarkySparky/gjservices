@@ -1,22 +1,32 @@
 angular.module('starter.controllers')
 
-.controller('SiteCtrl', function($firebaseArray, Site, globals, $rootScope, $scope, $localStorage, $timeout, debounce, Slug, $cordovaSocialSharing, allSites, $stateParams, $ionicActionSheet, $cordovaCamera, $filter, $state, $cordovaActionSheet) {
+.controller('SiteCtrl', function($firebaseArray, Work, globals, 
+    $rootScope, $scope, $localStorage, $timeout, debounce, Slug, 
+    $cordovaSocialSharing, Sites, $stateParams, $ionicActionSheet, 
+    $cordovaCamera, $filter, $state, $cordovaActionSheet) {
     window.scope = $scope;
     $scope.addPhoto = addPhoto;
     $scope.deletePhoto = deletePhoto;
     $scope.sendSite = sendSite;
-    $scope.site = {};
+    $scope.saveWork = saveWork;
 
     $scope.date = $stateParams.date;
     $scope.key = $stateParams.key;
+    $scope.title = $stateParams.title;
     $scope.$storage = $localStorage;
-    $scope.work = [];
     $scope.menuOpened = 'closed';
     $rootScope.email = $rootScope.email || globals.USER;
+    $scope.work = {};
 
     activate();
 
     ///////////////
+
+    function saveWork() {
+        console.log('Saving site');
+        Work.saveWork($scope.date, $scope.key, $scope.work, $scope.title);
+        $state.go('sites');
+    }
 
     function sendSite() {
         console.log($scope.site.src);
@@ -64,43 +74,27 @@ angular.module('starter.controllers')
                 $cordovaCamera.getPicture(cameraOptions).then(
                     function(data) {
                         console.log('Got camera data success:' + data);
-                        $scope.site.src = "data:image/jpeg;base64," + data;;
+                        $scope.work.src = "data:image/jpeg;base64," + data;;
                     },
                     function(error) {
                         console.log('Got camera data failure:' + error);
                     }
                 );
-
-
             });
     }
 
     // Triggered on a button click, or some other target
     function deletePhoto() {
-        $scope.site.email = $rootScope.email;
+        $scope.work.email = $rootScope.email;
         $scope.menuOpened = 'closed';
         if(confirm('Delete this photo?')){
-            $scope.site.src = '';            
+            $scope.work.src = '';            
         }
         //$state.reload();
     }
 
     function activate() {
-
-        var s = Site.getSite($scope.key, $scope.date);
-
-        s.$bindTo($scope, "site");
-
-        s.$loaded(function() {
-            $rootScope.$broadcast('loading:hide');
-
-            $scope.$watch('site', function(newValue, oldValue) {
-                if(newValue != oldValue) {
-                    $scope.site.email = $rootScope.email;
-                }
-            }, true);
-
-        });
+        $scope.work = Work.getWork($scope.date, $scope.key) || {};
     }
 });
 
