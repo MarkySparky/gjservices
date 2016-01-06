@@ -33,6 +33,5 @@
   },
   "_source": "git://github.com/ecofic/ngCordovaMocks.git",
   "_target": "~0.7.0",
-  "_originalSource": "ng-cordova-mocks",
-  "_direct": true
+  "_originalSource": "ng-cordova-mocks"
 }

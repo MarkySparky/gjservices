@@ -1,6 +1,6 @@
 {
   "name": "gjservices",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "gjservices: Gritting work recorder",
   "dependencies": {
     "gulp": "^3.5.6",
@@ -33,10 +33,6 @@
     {
       "locator": "https://github.com/loicknuchel/cordova-device-accounts.git",
       "id": "org.loicknuchel.cordova.deviceaccounts"
-    },
-    {
-      "locator": "https://github.com/Paldom/PinDialog.git",
-      "id": "hu.dpal.phonegap.plugins.PinDialog"
     },
     "org.apache.cordova.file",
     {

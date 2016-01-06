@@ -19,6 +19,5 @@
   },
   "_source": "git://github.com/monospaced/angular-elastic.git",
   "_target": "~2.5.1",
-  "_originalSource": "angular-elastic",
-  "_direct": true
+  "_originalSource": "angular-elastic"
 }

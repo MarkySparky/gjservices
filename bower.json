@@ -2,7 +2,7 @@
   "name": "HelloIonic",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.1.1",
+    "ionic": "driftyco/ionic-bower#1.2.1",
     "ngstorage": "~0.3.10"
   },
   "dependencies": {
@@ -25,6 +25,6 @@
     "angular-sanitize": "1.4.3",
     "angular": "1.4.3",
     "angular-animate": "1.4.3",
-    "ionic": "1.1.1"
+    "ionic": "v1.2.1"
   }
 }

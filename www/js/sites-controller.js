@@ -37,6 +37,10 @@ angular.module('starter.controllers')
     activate();
 
     //////////////////
+function sendEmail(){
+    console.log('Sending email');
+}
+
 
     function doRefresh() {
         var deferred = $q.defer();
