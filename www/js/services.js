@@ -56,9 +56,7 @@ angular.module('starter.services', [])
             console.log(work);
             var qty = 0;
             for (var entry in work) {
-                    console.log('Checking:', work[entry]);
-                if(entry !=='$priority' && work[entry].title){
-                    console.log('looping one:', work[entry]);
+                if(entry !=='$priority' && work[entry] && work[entry].title){
                     qty = qty + 1;
                     var site = Slug.slugify(work[entry].title);
                     var storageKey = Slug.slugify(shortDate(workdate) + '-' + site);

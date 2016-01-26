@@ -9777,6 +9777,9 @@ a.button {
 .overview {
   text-align: center; }
 
+.pane .item {
+  NOborder: 0; }
+
 .siteoverview {
   display: flex;
   width: 65%;

@@ -25,6 +25,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .overview {
     text-align: center;
 }
+.pane .item {
+    NOborder: 0;
+}
 
 .siteoverview {
     display: flex;

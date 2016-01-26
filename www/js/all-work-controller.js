@@ -2,7 +2,7 @@
 
 angular.module('starter')
 
-.controller('AllWorkController', function($scope, $rootScope, $cordovaEmailComposer, $cordovaFile, $state, globals, $firebaseArray) {
+.controller('AllWorkController', function($scope, $rootScope, $cordovaToast, $cordovaEmailComposer, $cordovaFile, $state, globals, $firebaseArray) {
     //https://docs.google.com/spreadsheets/d/1jFzrJxeumJusopmoXyGntEkSFtUR1zOqtblXEdCLVgA/pub?gid=0&single=true&output=csv
 
     var workRef = new Firebase('https://gjservices.firebaseio.com/work/');
@@ -15,33 +15,46 @@ angular.module('starter')
     function activate() {
         //$rootScope.$broadcast('loading:show');
         work.$loaded(function(work) {
-            console.log('Loaded yay');
             //$rootScope.$broadcast('loading:hide');
             $scope.work = work;
         });
     }
 
+    function deleteAllWorkFromServer() {
+        workRef.remove(onComplete);
+    }
+
+    var onComplete = function(error) {
+
+        if (error) {
+
+            $cordovaToast.showShortCenter('Failed to delete work data').then(function(success) {});
+            console.log('Synchronization failed');
+        } else {
+            $cordovaToast.showShortCenter('Work data has been deleted from the server').then(function(success) {});
+            console.log('Synchronization succeeded');
+        }
+    }
+
+
     function getDataForEmail(dates) {
-        console.log('sites', dates);
 
         var sitesForEmail = [];
 
         angular.forEach(dates, function(dte) {
-            console.log('dte:', dte);
 
             for (var p in dte) {
                 console.log(p.toString());
-                if (dte.hasOwnProperty(p) && p.indexOf('$')===-1) {
+                if (dte.hasOwnProperty(p) && p.indexOf('$') === -1) {
                     console.log('Adding this site');
                     sitesForEmail.push(dte[p]);
                 }
             }
         });
 
-        console.log('Sites for email:', sitesForEmail);
-
         sitesForEmail = sitesForEmail.map(function(site) {
             return {
+                "site": site.title || 'Unknown',
                 "user": site.createdBy || 'Unknown',
                 "time": site.timeCreated || 'Unknown',
                 "salt": site.salt || 0,
@@ -57,8 +70,6 @@ angular.module('starter')
 
     function sendEmail() {
 
-        console.log($scope.work);
-
         var work = getDataForEmail($scope.work);
         var filename = 'gj.csv';
 
@@ -66,7 +77,7 @@ angular.module('starter')
 
         // Specifying fields and data explicitly
         var csv = Papa.unparse({
-            fields: ['user', 'time', 'salt', 'machine', 'man', 'workdate', 'comments'],
+            fields: ['title', 'user', 'time', 'salt', 'machine', 'man', 'comments'],
             data: work
         });
 
@@ -74,7 +85,6 @@ angular.module('starter')
         $cordovaFile.writeFile(cordova.file.externalCacheDirectory, filename, csv, true)
             .then(function(success) {
                 // success
-                console.log('Written to ', cordova.file.externalCacheDirectory + filename, success);
 
                 var email = {
                     to: globals.ADMIN_EMAIL,
@@ -86,13 +96,23 @@ angular.module('starter')
                     isHtml: false
                 };
 
-                console.log('email:', email);
-
                 $cordovaEmailComposer.open(email).then(function() {
                     console.log('Email sent');
+                    //Delete all existing work?
+                    if (confirm('Delete all work on server?') && confirm('Are you really sure - check you got the last email?')) {
+                        deleteAllWorkFromServer();
+                    } else {
+                        console.log('Not deleting work o server');
+                    }
                 }, function() {
                     // user cancelled email
                     console.log('Email cancelled');
+                    //Delete all existing work?
+                    if (confirm('Delete all work on server?') && confirm('Are you really sure - check you got the last email?')) {
+                        deleteAllWorkFromServer();
+                    } else {
+                        console.log('Not deleting work on server');
+                    }
                 });
 
 
@@ -157,14 +177,14 @@ angular.module('starter')
             return;
         }
 
-        console.log('Escaped CSV:', escape(CSV));
+        // console.log('Escaped CSV:', escape(CSV));
 
-        console.log(cordova.file.externalCacheDirectory, filename);
+        // console.log(cordova.file.externalCacheDirectory, filename);
 
         $cordovaFile.writeFile(cordova.file.externalCacheDirectory, filename, CSV, true)
             .then(function(success) {
                 // success
-                console.log('Written to ', cordova.file.externalCacheDirectory + filename, success);
+                // console.log('Written to ', cordova.file.externalCacheDirectory + filename, success);
 
                 var email = {
                     to: globals.ADMIN_EMAIL,
@@ -176,7 +196,7 @@ angular.module('starter')
                     isHtml: false
                 };
 
-                console.log('email:', email);
+                // console.log('email:', email);
 
                 $cordovaEmailComposer.open(email).then(function() {
                     console.log('Email sent');

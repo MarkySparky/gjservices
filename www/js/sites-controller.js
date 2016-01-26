@@ -37,26 +37,26 @@ angular.module('starter.controllers')
     activate();
 
     //////////////////
-function sendEmail(){
-    console.log('Sending email');
-}
+    function sendEmail() {
+        console.log('Sending email');
+    }
 
 
     function doRefresh() {
         var deferred = $q.defer();
         $scope.isRefreshing = true;
-        console.log('Pushing');
-        $scope.pushToServer().then(function(){
-        console.log('Pulling');
+        console.log('Doing refresh');
+        $scope.pushToServer().then(function() {
+            console.log('Done pushing, Pulling');
             $scope.pullFromServer();
             $scope.$broadcast('scroll.refreshComplete');
             $scope.isRefreshing = false;
             deferred.resolve();
             $cordovaToast.showShortCenter('Data is up-to-date').then(function(success) {
                 // success
-              }, function (error) {
+            }, function(error) {
                 // error
-              });
+            });
 
 
         })
@@ -70,9 +70,11 @@ function sendEmail(){
             console.log('Done pulling');
 
 
-            Sites.doRefresh().then(function(enabledSites){
-                console.log('EmabledSites:', enabledSites);
+            Sites.doRefresh().then(function(enabledSites) {
                 console.log('Sites:', $scope.sites);
+
+                console.log('Setting Enabled Sites:', enabledSites);
+
                 Sites.setSites(enabledSites);
                 $scope.sites = Sites.getSiteList();
 
