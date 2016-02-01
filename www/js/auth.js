@@ -30,7 +30,6 @@ angular.module('starter.services')
 
     function restoreState() {
         username = window.localStorage[AUTH_KEY] || '';
-        console.log('Username:', username);
     }
 
     function logout() {
@@ -62,6 +61,9 @@ angular.module('starter.services')
 
     function getUsername() {
         var x = prompt('Enter your username', username)
+
+        $ionicPopup
+
         if (x) {
             return x;
         } else {

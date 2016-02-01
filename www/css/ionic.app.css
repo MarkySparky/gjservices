@@ -9771,8 +9771,14 @@ a.button {
 .col-offset-15 {
   margin-left: 15%; }
 
+.pins {
+  margin-top: 50px; }
+
 .pins > div {
   height: 31px; }
+
+input.username {
+  padding: 8px; }
 
 .overview {
   text-align: center; }

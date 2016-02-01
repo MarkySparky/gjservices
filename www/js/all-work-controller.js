@@ -54,7 +54,7 @@ angular.module('starter')
 
         sitesForEmail = sitesForEmail.map(function(site) {
             return {
-                "site": site.title || 'Unknown',
+                "title": site.title || 'Unknown',
                 "user": site.createdBy || 'Unknown',
                 "time": site.timeCreated || 'Unknown',
                 "salt": site.salt || 0,

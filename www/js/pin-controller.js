@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('PinCtrl', function(AuthService, $scope, $state, $location, $timeout, $rootScope, pins, AccountsSrv, globals) {
+.controller('PinCtrl', function($ionicPopup, AuthService, $scope, $state, $location, $timeout, $rootScope, pins, AccountsSrv, globals) {
 
     window.scope = $scope;
 
@@ -8,10 +8,50 @@ angular.module('starter.controllers')
     $scope.del = del;
     $scope.passcode = '';
     $scope.username = false;
+    var AUTH_KEY = 'gjusername';
 
     activate();
 
     ///////////
+
+// Triggered on a button click, or some other target
+$scope.getUsername = function() {
+  $scope.data = {username: $scope.username};
+
+  // An elaborate, custom popup
+  var myPopup = $ionicPopup.show({
+    template: '<input type="text" class="username" ng-model="data.username">',
+    title: 'Enter your username',
+    subTitle: '(Supplied by GJ Services)',
+    scope: $scope,
+    buttons: [
+      { text: 'Cancel' },
+      {
+        text: '<b>Save</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          if (!$scope.data.username) {
+            //don't allow the user to close unless he enters username
+            e.preventDefault();
+          } else {
+            return $scope.data.username;
+          }
+        }
+      }
+    ]
+  });
+
+  myPopup.then(function(res) {
+    console.log('Tapped!', res);
+    $scope.username = res;
+    return res;
+  });
+
+ };
+
+    function restoreState() {
+        $scope.username = window.localStorage[AUTH_KEY] || '';
+    }
 
     function add(value) {
         if ($scope.passcode.length < 4) {
@@ -47,8 +87,10 @@ angular.module('starter.controllers')
     }
 
     function activate() {
+        restoreState();
         setTimeout(function() {
-            $scope.username = AuthService.getUsername();
+            //$scope.username = AuthService.getUsername();
+            $scope.username = $scope.getUsername();
         }, 500);
     }
 
